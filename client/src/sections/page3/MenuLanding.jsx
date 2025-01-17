@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import MenuItem from './MenuItem';
 
 const MenuLanding = () => {
+  console.log('API URL: ', API_URL);
+
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [menuItems, setMenuItems] = useState([]);
   const [categories, setCategories] = useState([]);
