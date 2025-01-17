@@ -1,0 +1,19 @@
+.copy-icon {
+  transition: color 0.3s ease;
+  @apply text-black-2 text-1
+}
+
+.copy-icon:hover {
+  @apply text-black-1
+}
+
+.copy-message {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.copy-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}

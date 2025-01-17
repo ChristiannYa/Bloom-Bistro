@@ -1,0 +1,212 @@
+/* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Livvic:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .tp-1 {
+    /* 
+      - Food card description
+      - Add to cart button
+    */
+    @apply text-1 font-normal text-start;
+  }
+
+  .tp-2 {
+    /* 
+      - Reviews
+      - Info cards
+      - Shopping cart num
+    */
+    @apply text-1 font-medium text-start;
+  }
+
+  .tp-3 {
+    /* 
+      - Food price card
+    */
+    @apply text-1 font-normal text-end;
+  }
+
+  .tp-4 {
+    /* 
+      - Navigation links
+    */
+    @apply text-1 font-medium text-center;
+  }
+
+  .tp-5 {
+    /* 
+      - Nutrition information
+      - Notes paragraphs
+    */
+    @apply text-2 font-light text-start;
+  }
+
+  .tp-6 {
+    /* 
+      - Customer name
+      - About us paragraph
+      - Menu item name
+    */
+    @apply text-2 font-normal text-start;
+  }
+
+  .tp-7 {
+    /* 
+      - Item ingredients summary
+      - Item ingredient name
+      - Note title
+    */
+    @apply text-3 font-normal text-start;
+  }
+
+  .tp-8 {
+    /* 
+      - Location text
+      - Schedule text
+      - Footer titles
+    */
+    @apply text-3 font-medium text-start;
+  }
+
+  .tp-9 {
+    /* 
+      - Menu page titles
+    */
+    @apply text-2 font-medium text-center;
+  }
+
+  .tp-10 {
+    /* 
+      - Items name in slideshow
+      - Items slideshow button
+    */
+    @apply text-2 font-normal text-center;
+  }
+
+  .tp-11 {
+    /* 
+      - Nutrition page main titles
+    */
+    @apply text-6 font-medium text-start;
+  }
+
+  .main-header {
+    @apply text-start font-livvic text-4xl font-semibold text-acc-1;
+  }
+}
+
+@layer components {
+  .border-hover-1 {
+    border: solid 1px transparent;
+    
+    @media (hover: hover) {
+      &:hover {
+        @apply border-acc-1;
+      }
+    }
+  }
+
+  .scale-hover {
+    @media (hover: hover) {
+      &:hover {
+        transform: scale(1.12);
+      }
+    }
+
+    @apply transition-1
+  }  
+
+  .transition-1 {
+    transition: 220ms ease-in-out;
+  }
+
+  .blur {
+    background: rgba(255, 255, 255, 0.001);
+    backdrop-filter: blur(0.01px);
+    -webkit-backdrop-filter: blur(0.01px);
+  }
+
+  .hidden-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .hidden-scrollbar::-webkit-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .scroll-horizontal {
+    @apply overflow-x-auto snap-x snap-mandatory scroll-smooth;
+  }
+}
+
+@layer utilities {
+  .cm-mx {
+    @apply mx-[100px];
+  }
+
+  .cm-ml {
+    @apply ml-[100px];
+  }
+
+  .cm-my {
+    @apply my-[50px];
+  }
+
+  .cm-mb {
+    @apply mb-[50px];
+  }
+
+  .section-padding {
+    @apply px-[50px] py-[100px];
+  }
+
+  .fixed-centered {
+    @apply fixed left-1/2 -translate-x-1/2;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .mobile-stack {
+    @apply md:flex-row flex-col;
+  }
+
+  .screen {
+    width: min(96%, 1440px);
+    margin-inline: auto;
+  }
+
+  .wh-fit {
+    @apply w-fit h-fit;
+  }
+
+  .wh-full {
+    @apply w-full h-full;
+  }
+
+  .menu-grid {
+    gap: 16px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    justify-content: center;
+    align-items: start;
+  }
+
+  .macros-grid {
+    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 260px);
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(auto-fit, 180px);
+      gap: 12px;
+    }
+  }
+}

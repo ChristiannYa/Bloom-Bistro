@@ -1,0 +1,16 @@
+@media (max-width: 768px) {
+    .menu-invisible {
+      transform: translateX(100%);
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+    }
+  
+    .menu-visible {
+      transform: translate(0%, 0%);
+      visibility: visible;
+      opacity: 1;
+      position: relative;
+    }
+}
+  
