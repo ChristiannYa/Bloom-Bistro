@@ -1,3 +1,4 @@
+import API_URL from '../../config/api';
 import { useState } from 'react';
 import ImageUpload from '../admin/form-components/ImageUpload';
 
@@ -6,7 +7,7 @@ const AddBeverage = () => {
   const [formData, setFormData] = useState({
     title: '',
     price: '',
-    image_url: ''
+    image_url: '',
   });
 
   const handleImageUpload = async (e) => {
@@ -18,13 +19,13 @@ const AddBeverage = () => {
     formData.append('image', file);
 
     try {
-      const response = await fetch('http://localhost:5000/api/upload', {
+      const response = await fetch(`${API_URL}/api/upload`, {
         method: 'POST',
         body: formData,
       });
       const data = await response.json();
 
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         image_url: data.url,
       }));
@@ -37,7 +38,7 @@ const AddBeverage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -46,18 +47,18 @@ const AddBeverage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/admin/beverages', {
+      const response = await fetch(`${API_URL}/api/admin/beverages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
-      
+
       if (response.ok) {
         alert('Beverage added successfully!');
         setFormData({
           title: '',
           price: '',
-          image_url: ''
+          image_url: '',
         });
       }
     } catch (error) {
@@ -83,7 +84,7 @@ const AddBeverage = () => {
               required
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Price

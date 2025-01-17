@@ -1,3 +1,4 @@
+import API_URL from '../config/api';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ const FoodInfo = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/menu-items/${slug}`);
+        const response = await fetch(`${API_URL}/api/menu-items/${slug}`);
         if (!response.ok) {
           window.location.href = '/menu';
           return;
@@ -24,32 +25,41 @@ const FoodInfo = () => {
   }, [slug]);
 
   return (
-    <section className='bg-acc-4 py-custom-2'>
-      <div className='screen'>
+    <section className="bg-acc-4 py-custom-2">
+      <div className="screen">
         {itemDetails && (
-          <div className='flex flex-col gap-y-4'>
-            <h3 className='main-header mb-4'>{itemDetails.title}</h3>
-            <div className='flex flex-wrap gap-x-4 gap-y-2'>
-              <img 
-                src={itemDetails.image_url} 
+          <div className="flex flex-col gap-y-4">
+            <h3 className="main-header mb-4">{itemDetails.title}</h3>
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              <img
+                src={itemDetails.image_url}
                 alt={itemDetails.title}
-                className="h-[200px] rounded-sm" 
+                className="h-[200px] rounded-sm"
               />
-              <div className='flex flex-col w-2/5 max-md:w-3/4'>
-                <h4 className='text-black-1 font-inter font-medium text-2'>Ingredients</h4>
-                <p className='text-black-1 font-inter font-normal text-1 capitalize'>
+              <div className="flex flex-col w-2/5 max-md:w-3/4">
+                <h4 className="text-black-1 font-inter font-medium text-2">
+                  Ingredients
+                </h4>
+                <p className="text-black-1 font-inter font-normal text-1 capitalize">
                   {itemDetails.ingredients}
                 </p>
               </div>
             </div>
 
-            <div className='flex flex-col'>
-              <h3 className='text-black-1 font-inter font-medium text-2'>Nutrition Facts</h3>
-              <div className='macros-grid'>
+            <div className="flex flex-col">
+              <h3 className="text-black-1 font-inter font-medium text-2">
+                Nutrition Facts
+              </h3>
+              <div className="macros-grid">
                 {itemDetails.nutrition_labels.map((label, index) => (
-                  <div key={index} className='bg-acc-2 rounded-md overflow-hidden h-fit px-3 py-[6px]'>
-                    <h3 className='text-black-1 font-inter font-normal text-1 capitalize'>{label.title}</h3>
-                    <ul className='text-black-2 font-inter font-light text-1'>
+                  <div
+                    key={index}
+                    className="bg-acc-2 rounded-md overflow-hidden h-fit px-3 py-[6px]"
+                  >
+                    <h3 className="text-black-1 font-inter font-normal text-1 capitalize">
+                      {label.title}
+                    </h3>
+                    <ul className="text-black-2 font-inter font-light text-1">
                       <li>Calories: {label.calories}</li>
                       <li>Protein: {label.protein}g</li>
                       <li>Carbs: {label.carbs}g</li>
@@ -62,11 +72,15 @@ const FoodInfo = () => {
             </div>
 
             {itemDetails.notes && (
-              <aside className='flex flex-col gap-y-2'>
+              <aside className="flex flex-col gap-y-2">
                 {itemDetails.notes.map((note, index) => (
                   <div key={index}>
-                    <h3 className='ext-black-1 font-inter font-normal text-1 capitalize'>{note.title}</h3>
-                    <p className='text-black-2 font-inter font-light text-1'>{note.content}</p>
+                    <h3 className="ext-black-1 font-inter font-normal text-1 capitalize">
+                      {note.title}
+                    </h3>
+                    <p className="text-black-2 font-inter font-light text-1">
+                      {note.content}
+                    </p>
                   </div>
                 ))}
               </aside>

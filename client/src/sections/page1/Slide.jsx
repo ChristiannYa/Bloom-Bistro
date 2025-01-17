@@ -19,7 +19,9 @@ const Slide = () => {
     const checkScrollPosition = () => {
       if (container) {
         const isAtStart = container.scrollLeft <= 0;
-        const isAtEnd = Math.ceil(container.scrollLeft + container.clientWidth) >= container.scrollWidth;
+        const isAtEnd =
+          Math.ceil(container.scrollLeft + container.clientWidth) >=
+          container.scrollWidth;
         setScrollState({ isAtStart, isAtEnd });
       }
     };
@@ -34,18 +36,8 @@ const Slide = () => {
     return () => {
       container?.removeEventListener('scroll', checkScrollPosition);
       window.removeEventListener('resize', checkScrollPosition);
-    }
-  }, [containerRef]); // Add slide as well when fetching the data
-
-  // useEffect(() => {
-  //   const fetchSlide = async () => {
-  //     const res = await fetch('http://localhost:3000/api/slide');
-  //     const data = await res.json();
-  //     setSlide(data);
-  //   };
-
-  //   fetchSlide();
-  // }, []);
+    };
+  }, [containerRef]);
 
   return (
     <section className="bg-acc-2 w-screen py-custom-1">

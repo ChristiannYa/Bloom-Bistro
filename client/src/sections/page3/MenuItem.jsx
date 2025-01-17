@@ -1,8 +1,10 @@
+import API_URL from '../../config/api';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const MenuItems = (props) => {
-  const { id, title, image_url, price, description, slug, category_id } = props.data;
+  const { id, title, image_url, price, description, slug, category_id } =
+    props.data;
   const isAdmin = true;
   const isBeverage = category_id === 5;
 
@@ -10,15 +12,12 @@ const MenuItems = (props) => {
     console.log('Deleting item with ID:', id);
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/admin/menu-items/${id}`,
-          {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const response = await fetch(`${API_URL}/api/admin/menu-items/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         console.log('Delete response:', response);
 
         if (response.ok) {
@@ -55,11 +54,19 @@ const MenuItems = (props) => {
       )}
     </div>
   );
-  
+
   return (
-    <div className={`bg-acc-2 font-inter rounded-md wh-fit p-2 ${isBeverage ? 'max-md:flex-grow' : ''}`}>
-      <div className={`rounded-md overflow-hidden h-[180px] ${isBeverage ? 'w-[120px] max-md:w-full' : 'w-full'}`}>
-        <ImageComponent/>
+    <div
+      className={`bg-acc-2 font-inter rounded-md wh-fit p-2 ${
+        isBeverage ? 'max-md:flex-grow' : ''
+      }`}
+    >
+      <div
+        className={`rounded-md overflow-hidden h-[180px] ${
+          isBeverage ? 'w-[120px] max-md:w-full' : 'w-full'
+        }`}
+      >
+        <ImageComponent />
       </div>
       <div className="flex flex-col gap-y-1">
         <div className="flex flex-col">
@@ -90,7 +97,7 @@ MenuItems.propTypes = {
     price: PropTypes.number.isRequired,
     description: PropTypes.string,
     slug: PropTypes.string.isRequired,
-    category_id: PropTypes.number.isRequired
+    category_id: PropTypes.number.isRequired,
   }),
   selectedCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

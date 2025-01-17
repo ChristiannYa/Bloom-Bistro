@@ -1,3 +1,4 @@
+import API_URL from '../../config/api';
 import { useState, useEffect } from 'react';
 import BasicDetails from '../admin/form-components/BasicDetails';
 import ImageUpload from '../admin/form-components/ImageUpload';
@@ -11,7 +12,7 @@ const AddMenuItem = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch('http://localhost:5000/api/categories');
+      const response = await fetch(`${API_URL}/api/categories`);
       const data = await response.json();
       setCategories(data);
     };
@@ -169,7 +170,7 @@ const AddMenuItem = () => {
     formData.append('image', file);
 
     try {
-      const response = await fetch('http://localhost:5000/api/upload', {
+      const response = await fetch(`${API_URL}/api/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -203,14 +204,11 @@ const AddMenuItem = () => {
     }
 
     try {
-      const response = await fetch(
-        'http://localhost:5000/api/admin/menu-items',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/admin/menu-items`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
       if (response.ok) {
         alert('Menu item added successfully!');
         resetForm();

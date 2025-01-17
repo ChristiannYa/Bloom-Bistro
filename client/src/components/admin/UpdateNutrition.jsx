@@ -1,3 +1,4 @@
+import API_URL from '../../config/api';
 import { useEffect, useState } from 'react';
 import NutritionTotals from '../admin/form-components/NutritionTotals';
 import IngredientForm from '../admin/form-components/IngredientForm';
@@ -10,12 +11,12 @@ const UpdateNutrition = () => {
 
   useEffect(() => {
     const fetchMenuItem = async () => {
-      const response = await fetch(`http://localhost:5000/api/admin/menu-items/${id}`);
+      const response = await fetch(`${API_URL}/api/admin/menu-items/${id}`);
       const data = await response.json();
       setMenuItem(data);
       setFormData({
         ingredient_nutrition: data.nutrition_labels.slice(1) || [],
-        nutrition_labels: JSON.stringify(data.nutrition_labels)
+        nutrition_labels: JSON.stringify(data.nutrition_labels),
       });
     };
     fetchMenuItem();
@@ -27,7 +28,7 @@ const UpdateNutrition = () => {
     const labels = JSON.parse(formData.nutrition_labels);
     return labels[0] || { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 };
   };
-  
+
   const calculateTotalIng = (ingredients) => {
     return ingredients.reduce(
       (totals, ingredient) => ({
@@ -50,7 +51,7 @@ const UpdateNutrition = () => {
       fat: 0,
       fiber: 0,
     };
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       ingredient_nutrition: [...prev.ingredient_nutrition, newIngredient],
     }));
@@ -59,10 +60,10 @@ const UpdateNutrition = () => {
   const updateIngredientNutrition = (index, field, value) => {
     const updatedNutrition = [...formData.ingredient_nutrition];
     updatedNutrition[index][field] = value;
-    
+
     const totals = calculateTotalIng(updatedNutrition);
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
       ingredient_nutrition: updatedNutrition,
       nutrition_labels: JSON.stringify([
@@ -78,7 +79,7 @@ const UpdateNutrition = () => {
     );
     const totals = calculateTotalIng(updatedIngredients);
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       ingredient_nutrition: updatedIngredients,
       nutrition_labels: JSON.stringify([
@@ -92,7 +93,7 @@ const UpdateNutrition = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin/menu-items/${menuItem.id}/nutrition`,
+        `${API_URL}/api/admin/menu-items/${menuItem.id}/nutrition`,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -109,24 +110,24 @@ const UpdateNutrition = () => {
 
   return (
     <div className="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-md mt-20">
-      <div className='py-4'>
+      <div className="py-4">
         <h2 className="text-2xl font-bold">
           Update Nutrition Information for {menuItem?.title}
         </h2>
         {menuItem?.image_url && (
-          <img 
-            src={menuItem.image_url} 
+          <img
+            src={menuItem.image_url}
             alt={menuItem.title}
-            className='w-24 h-20 object-cover rounded' 
+            className="w-24 h-20 object-cover rounded"
           />
         )}
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <NutritionTotals totals={getTotals()} />
-        
+
         <div className="space-y-4">
           <h4 className="font-medium">Ingredient Details</h4>
-          <div className='gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+          <div className="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {formData.ingredient_nutrition.map((ingredient, index) => (
               <IngredientForm
                 key={index}

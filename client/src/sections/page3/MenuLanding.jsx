@@ -1,3 +1,4 @@
+import API_URL from '../../config/api';
 import { useEffect, useState } from 'react';
 import MenuItem from './MenuItem';
 
@@ -7,15 +8,13 @@ const MenuLanding = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const beverages = menuItems.filter((item) => item.category_id === 5);
-  const regularItems = menuItems.filter(
-    (item) => item.category_id !== 5
-  );
+  const regularItems = menuItems.filter((item) => item.category_id !== 5);
 
   // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/categories');
+        const response = await fetch(`${API_URL}/api/categories`);
         if (!response.ok) throw new Error('Failed to fetch categories');
         const data = await response.json();
         setCategories(Array.isArray(data) ? data : []);
@@ -31,7 +30,7 @@ const MenuLanding = () => {
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/menu-items');
+        const response = await fetch(`${API_URL}/api/menu-items`);
         if (!response.ok) throw new Error('Failed to fetch menu items');
         const data = await response.json();
         setMenuItems(data);

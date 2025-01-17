@@ -1,3 +1,4 @@
+import API_URL from '../../config/api';
 import { useEffect, useState } from 'react';
 import BeverageItem from './BeverageItem';
 
@@ -8,7 +9,7 @@ const BeverageLanding = () => {
   useEffect(() => {
     const fetchBeverages = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/beverages');
+        const response = await fetch(`${API_URL}/api/beverages`);
         if (!response.ok) throw new Error('Failed to fetch beverages');
         const data = await response.json();
         setBeverages(data);
