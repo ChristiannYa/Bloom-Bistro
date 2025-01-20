@@ -6,6 +6,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './styles/pages/login.scss';
+
 @layer base {
   .tp-1 {
     /* 
@@ -19,7 +21,6 @@
     /* 
       - Reviews
       - Info cards
-      - Shopping cart num
     */
     @apply text-1 font-medium text-start;
   }
@@ -49,7 +50,6 @@
   .tp-6 {
     /* 
       - Customer name
-      - About us paragraph
       - Menu item name
     */
     @apply text-2 font-normal text-start;
@@ -142,6 +142,10 @@
   .scroll-horizontal {
     @apply overflow-x-auto snap-x snap-mandatory scroll-smooth;
   }
+
+  .focused {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-acc-1;
+  }
 }
 
 @layer utilities {
@@ -179,6 +183,11 @@
 
   .screen {
     width: min(96%, 1440px);
+    margin-inline: auto;
+  }
+
+  .screen800 {
+    width: min(96%, 800px);
     margin-inline: auto;
   }
 

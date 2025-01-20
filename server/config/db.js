@@ -4,6 +4,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+console.log(
+  'Using connection:',
+  process.env.DATABASE_URL ? 'Production URL' : 'Local config'
+);
+
 const pool = new Pool(
   process.env.DATABASE_URL
     ? {
@@ -30,6 +35,13 @@ const pool = new Pool(
             : false,
       }
 );
+
+pool
+  .query('SELECT COUNT(*) FROM users')
+  .then((result) =>
+    console.log('Users table accessible, count:', result.rows[0].count)
+  )
+  .catch((err) => console.log('Users table access error:', err.message));
 
 pool.on('connect', () => {
   console.log('Database connected successfully');

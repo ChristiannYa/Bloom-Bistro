@@ -1,0 +1,33 @@
+.login {
+  $border-rd: 8px;
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  &__input {
+    @apply bg-acc-2;
+    border-radius: $border-rd;
+
+    width: 100%;
+    margin-inline: auto;
+
+    input {
+      @apply bg-acc-2 text-acc-1;
+      border-radius: $border-rd;
+      appearance: none;
+
+      width: 100%;
+
+      &::placeholder {
+        @apply text-acc-1 font-inter;
+        font-weight: 200;
+      }
+
+      @apply focused;
+    }
+  }
+}

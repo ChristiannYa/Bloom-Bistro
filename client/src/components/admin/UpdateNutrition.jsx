@@ -91,12 +91,17 @@ const UpdateNutrition = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(
         `${API_URL}/api/admin/menu-items/${menuItem.id}/nutrition`,
         {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ nutrition_labels: formData.nutrition_labels }),
         }
       );

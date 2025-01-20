@@ -5,20 +5,20 @@ import { Link } from 'react-router-dom';
 const MenuItems = (props) => {
   const { id, title, image_url, price, description, slug, category_id } =
     props.data;
-  const isAdmin = true;
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
   const isBeverage = category_id === 5;
 
   const handleDelete = async (id) => {
-    console.log('Deleting item with ID:', id);
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
+        const token = localStorage.getItem('token');
         const response = await fetch(`${API_URL}/api/admin/menu-items/${id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Delete response:', response);
 
         if (response.ok) {
           console.log('Item deleted successfully');
@@ -57,7 +57,7 @@ const MenuItems = (props) => {
 
   return (
     <div
-      className={`bg-acc-2 font-inter rounded-md wh-fit p-2 ${
+      className={`bg-acc-4 font-inter rounded-md wh-fit p-2 ${
         isBeverage ? 'max-md:flex-grow' : ''
       }`}
     >

@@ -1,47 +1,52 @@
 import API_URL from '../../config/api';
 import { useEffect, useState } from 'react';
+
+import MenuSkeleton from './MenuSkeleton';
 import MenuItem from './MenuItem';
 
 const MenuLanding = () => {
-  console.log('API URL: ', API_URL);
+  const FORCE_LOADING = false;
 
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [menuItems, setMenuItems] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const beverages = menuItems.filter((item) => item.category_id === 5);
   const regularItems = menuItems.filter((item) => item.category_id !== 5);
 
-  // Fetch categories
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const response = await fetch(`${API_URL}/api/categories`);
-        if (!response.ok) throw new Error('Failed to fetch categories');
-        const data = await response.json();
-        setCategories(Array.isArray(data) ? data : []);
+        const [categoriesResponse, menuItemsResponse] = await Promise.all([
+          fetch(`${API_URL}/api/categories`),
+          fetch(`${API_URL}/api/menu-items`),
+        ]);
+
+        if (!categoriesResponse.ok)
+          throw new Error('Failed to fetch categories');
+        if (!menuItemsResponse.ok)
+          throw new Error('Failed to fetch menu items');
+
+        const [categoriesData, menuItemsData] = await Promise.all([
+          categoriesResponse.json(),
+          menuItemsResponse.json(),
+        ]);
+
+        setCategories(Array.isArray(categoriesData) ? categoriesData : []);
+        setMenuItems(menuItemsData);
       } catch (err) {
         setError(err.message);
         setCategories([]);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  // Fetch menu items
-  useEffect(() => {
-    const fetchMenuItems = async () => {
-      try {
-        const response = await fetch(`${API_URL}/api/menu-items`);
-        if (!response.ok) throw new Error('Failed to fetch menu items');
-        const data = await response.json();
-        setMenuItems(data);
-      } catch (err) {
-        setError(err.message);
         setMenuItems([]);
+      } finally {
+        setIsLoading(false);
       }
     };
-    fetchMenuItems();
+
+    fetchData();
   }, []);
 
   const displayedItems =
@@ -49,15 +54,19 @@ const MenuLanding = () => {
       ? [...regularItems].sort(() => Math.random() - 0.5)
       : regularItems.filter((item) => item.category_id === selectedCategory);
 
+  if (isLoading || FORCE_LOADING) {
+    return <MenuSkeleton />;
+  }
+
   if (error) {
     return <div>Error loading menu: {error}</div>;
   }
 
   return (
-    <section className="pt-custom-2 pb-custom-1 bg-acc-4">
+    <section className="pt-custom-2 pb-custom-1">
       <div className="screen flex flex-col gap-y-[25px]">
-        <nav className="flex justify-center">
-          <ul className="scroll-horizontal flex mx-auto gap-x-5 w-fit">
+        <nav>
+          <ul className="flex justify-center flex-wrap gap-x-5 gap-y-3">
             {categories.map((category) => (
               <li
                 key={category.id}
@@ -92,14 +101,17 @@ const MenuLanding = () => {
         </div>
 
         {/* bevergaes array */}
-        <div className="flex flex-wrap gap-4 border-t border-acc-1 pt-5">
-          {beverages.map((item) => (
-            <MenuItem
-              key={item.id}
-              data={item}
-              selectedCategory={selectedCategory}
-            />
-          ))}
+        <div className="flex flex-col border-t border-acc-1 pt-5">
+          <h2 className="main-header mb-5">Beverages</h2>
+          <div className="flex flex-wrap gap-4">
+            {beverages.map((item) => (
+              <MenuItem
+                key={item.id}
+                data={item}
+                selectedCategory={selectedCategory}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

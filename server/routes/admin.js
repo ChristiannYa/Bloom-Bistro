@@ -2,8 +2,11 @@ import express from 'express';
 import pool from '../config/db.js';
 import cloudinary from '../config/cloudinary.js';
 import upload from '../middleware/uploadMiddleware.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
+
+router.use('/api/admin', authMiddleware);
 
 // Generate slug from title
 const generateSlug = (title) => {
@@ -13,7 +16,7 @@ const generateSlug = (title) => {
     .replace(/(^-|-$)/g, '');
 };
 
-router.post('/api/admin/menu-items', async (req, res) => {
+router.post('/menu-items', async (req, res) => {
   try {
     const {
       title,

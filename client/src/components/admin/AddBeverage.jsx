@@ -19,9 +19,14 @@ const AddBeverage = () => {
     formData.append('image', file);
 
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`${API_URL}/api/upload`, {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
       });
       const data = await response.json();
 

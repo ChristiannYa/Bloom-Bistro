@@ -1,9 +1,9 @@
 export const navLinks = [
-  { id: 1,path: '/', label: 'Home' },
-  { id: 2,path: '/about', label: 'About' },
-  { id: 3,path: '/menu', label: 'Menu' },
-  { id: 4,path: '*', label: '404' }
-]
+  { id: 1, path: '/', label: 'Home' },
+  { id: 2, path: '/menu', label: 'Menu' },
+  { id: 3, path: '/login', label: 'Login' },
+  { id: 4, path: '*', label: '404' },
+];
 
 export const slide = [
   { id: 1,name: 'Lunch', image_url: './src/assets/images/slide/lunch-slide.png' },

@@ -5,6 +5,7 @@ import divisor from './divisor.svg'
 import facebook from './facebook.svg';
 import happy from './happy.svg';
 import heart from './heart.svg';
+import loadingImg from './loadingImg.svg';
 import info from './info.svg';
 import instagram from './instagram.svg';
 import logoFooter from './logo-footer.svg';
@@ -17,21 +18,22 @@ import star from './star.svg';
 import unfilledStar from './unfilled-star.svg';
 
 export default {
-    cart,
-    copy,
-    customers,
-    divisor,
-    facebook,
-    happy,
-    heart,
-    info,
-    instagram,
-    logoFooter,
-    logo,
-    lunch,
-    next,
-    prev,
-    sauce,
-    star,
-    unfilledStar
+  cart,
+  copy,
+  customers,
+  divisor,
+  facebook,
+  happy,
+  heart,
+  loadingImg,
+  info,
+  instagram,
+  logoFooter,
+  logo,
+  lunch,
+  next,
+  prev,
+  sauce,
+  star,
+  unfilledStar,
 };
