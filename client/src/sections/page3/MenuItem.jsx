@@ -66,7 +66,7 @@ const MenuItems = (props) => {
 
   return (
     <div
-      className={`border-4 font-inter rounded-md wh-fit p-2 ${
+      className={`font-inter rounded-md wh-fit p-2 ${
         isBeverage ? 'max-md:flex-grow bg-none' : 'bg-acc-4'
       }`}
     >
