@@ -67,6 +67,16 @@ const MenuLanding = () => {
       <div className="screen flex flex-col gap-y-[25px]">
         <nav>
           <ul className="flex justify-center flex-wrap gap-x-5 gap-y-3">
+            <li
+              onClick={() => setSelectedCategory('all')}
+              className={`font-inter font-semibold text-1 text-center border-hover-1 rounded-md min-w-[160px] py-2 cursor-pointer  ${
+                selectedCategory === 'all'
+                  ? 'text-acc-3 bg-acc-1'
+                  : 'text-acc-1 bg-acc-3'
+              }`}
+            >
+              All
+            </li>
             {categories.map((category) => (
               <li
                 key={category.id}
@@ -101,8 +111,8 @@ const MenuLanding = () => {
         </div>
 
         {/* bevergaes array */}
-        <div className="flex flex-col border-t border-acc-1 pt-5">
-          <h2 className="main-header mb-5">Beverages</h2>
+        <div className="flex flex-col">
+          {selectedCategory !== 5 && <h2 className="main-header">Beverages</h2>}
           <div className="flex flex-wrap gap-4">
             {beverages.map((item) => (
               <MenuItem
