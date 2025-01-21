@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { PrevButton, NextButton} from '../../components/SlideButtons';
 import icons from '../../assets/icons/index';
-import { reviews } from '../../constants';
+import { rvs } from '../../constants';
 
 const Reviews = () => {
   const [scrollState, setScrollState] = useState({
@@ -24,7 +24,7 @@ const Reviews = () => {
       }
     };
 
-    if (reviews.length > 0) {
+    if (rvs.length > 0) {
       checkScrollPosition();
     }
 
@@ -35,7 +35,7 @@ const Reviews = () => {
       container?.removeEventListener('scroll', checkScrollPosition);
       window.removeEventListener('resize', checkScrollPosition);
     };
-  }, [containerRef]); // Add slide as well when fetching the data
+  }, [containerRef]);
 
   return (
     <section className="bg-acc-3 w-screen py-custom-1">
@@ -43,7 +43,7 @@ const Reviews = () => {
         ref={containerRef}
         className="screen flex scroll-horizontal hidden-scrollbar gap-5"
       >
-        {reviews.map((review) => (
+        {rvs.map((review) => (
           <div
             key={review.id}
             className="bg-acc-2 rounded-md font-inter snap-center min-w-[240px] h-fit p-4 gap-y-3 flex flex-col"
@@ -65,7 +65,9 @@ const Reviews = () => {
                   {[...Array(5)].map((_, index) => (
                     <img
                       key={index}
-                      src={index < review.stars ? icons.star : icons.unfilledStar}
+                      src={
+                        index < review.stars ? icons.star : icons.unfilledStar
+                      }
                       alt=""
                       width={12}
                       height={12}

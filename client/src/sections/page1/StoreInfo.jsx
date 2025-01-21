@@ -1,4 +1,5 @@
-import { location } from "../../constants"
+import * as miscellaneous from '../../assets/images/miscellaneous/index';
+import { location } from '../../constants';
 
 const StoreInfo = () => {
   return (
@@ -7,14 +8,14 @@ const StoreInfo = () => {
         <div className="font-livvic flex items-end gap-x-6 max-md:flex-col max-md:items-start">
           {/* image wrapper */}
           <div>
-            <img src="./src/assets/images/map.png" alt="map" />
+            <img src={miscellaneous.map} alt="Map location" />
           </div>
-           {/* location content */}
+          {/* location content */}
           <div className="flex flex-col wh-fit">
             <h1 className="text-black-1 font-medium text-6">
               Come Try Our Menu!
             </h1>
-            {location.map(item => (
+            {location.map((item) => (
               <div key={item.id} className="">
                 <h2 className="text-black-1 font-medium text-4">
                   {item.title}
@@ -27,18 +28,16 @@ const StoreInfo = () => {
                       </li>
                     ))}
                   </ul>
-                ): (
-                  <p className="tp-8 text-black-2">
-                    {item.content}
-                  </p>
+                ) : (
+                  <p className="tp-8 text-black-2">{item.content}</p>
                 )}
               </div>
             ))}
-          </div> 
+          </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default StoreInfo
+export default StoreInfo;
