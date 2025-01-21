@@ -110,18 +110,17 @@ const MenuLanding = () => {
           ))}
         </div>
 
+        {selectedCategory !== 5 && <h2 className="main-header">Beverages</h2>}
+
         {/* bevergaes array */}
-        <div className="flex flex-col">
-          {selectedCategory !== 5 && <h2 className="main-header">Beverages</h2>}
-          <div className="flex flex-wrap gap-4">
-            {beverages.map((item) => (
-              <MenuItem
-                key={item.id}
-                data={item}
-                selectedCategory={selectedCategory}
-              />
-            ))}
-          </div>
+        <div className="flex flex-wrap gap-4">
+          {beverages.map((item) => (
+            <MenuItem
+              key={item.id}
+              data={item}
+              selectedCategory={selectedCategory}
+            />
+          ))}
         </div>
       </div>
     </section>
