@@ -6,7 +6,7 @@ import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.use('/api/admin', authMiddleware);
+router.use(authMiddleware);
 
 // Generate slug from title
 const generateSlug = (title) => {
@@ -54,7 +54,7 @@ router.post('/menu-items', async (req, res) => {
   }
 });
 
-router.post('/api/upload', upload.single('image'), async (req, res) => {
+router.post('/upload', upload.single('image'), async (req, res) => {
   try {
     console.log('File received:', req.file);
     const b64 = Buffer.from(req.file.buffer).toString('base64');
@@ -74,7 +74,7 @@ router.post('/api/upload', upload.single('image'), async (req, res) => {
   }
 });
 
-router.get('/api/admin/menu-items', async (req, res) => {
+router.get('/menu-items', async (req, res) => {
   try {
     const result = await pool.query(`
             SELECT m.*, d.ingredients, d.nutrition_labels, d.notes 
@@ -88,26 +88,29 @@ router.get('/api/admin/menu-items', async (req, res) => {
   }
 });
 
-router.get('/api/admin/menu-items/:id', async (req, res) => {
+router.get('/menu-items/:id', async (req, res) => {
   try {
-    const result = await pool.query(`
+    const result = await pool.query(
+      `
       SELECT m.*, d.ingredients, d.nutrition_labels, d.notes 
       FROM menu_items m 
       LEFT JOIN item_details d ON m.id = d.menu_item_id 
       WHERE m.id = $1
-    `, [req.params.id]);
-    
+    `,
+      [req.params.id]
+    );
+
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Menu item not found' });
     }
-    
+
     res.json(result.rows[0]);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-router.put('/api/admin/menu-items/:id/nutrition', async (req, res) => {
+router.put('/menu-items/:id/nutrition', async (req, res) => {
   try {
     const { id } = req.params;
     const { nutrition_labels } = req.body;
@@ -130,7 +133,7 @@ router.put('/api/admin/menu-items/:id/nutrition', async (req, res) => {
   }
 });
 
-router.delete('/api/admin/menu-items/:id', async (req, res) => {
+router.delete('/menu-items/:id', async (req, res) => {
   try {
     await pool.query('DELETE FROM item_details WHERE menu_item_id = $1', [
       req.params.id,

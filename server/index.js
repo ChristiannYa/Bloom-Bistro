@@ -21,8 +21,8 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
-app.use(adminRoutes);
-app.use(menuRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/', menuRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);

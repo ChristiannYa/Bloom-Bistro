@@ -11,12 +11,22 @@ const UpdateNutrition = () => {
 
   useEffect(() => {
     const fetchMenuItem = async () => {
-      const response = await fetch(`${API_URL}/api/admin/menu-items/${id}`);
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/api/admin/menu-items/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
+
       setMenuItem(data);
       setFormData({
-        ingredient_nutrition: data.nutrition_labels.slice(1) || [],
-        nutrition_labels: JSON.stringify(data.nutrition_labels),
+        ingredient_nutrition: data.nutrition_labels
+          ? data.nutrition_labels.slice(1)
+          : [],
+        nutrition_labels: data.nutrition_labels
+          ? JSON.stringify(data.nutrition_labels)
+          : JSON.stringify([]),
       });
     };
     fetchMenuItem();

@@ -9,6 +9,11 @@ export const navLinks = [
   { id: 4, path: '*', label: '404' },
 ];
 
+export const adminLinks = [
+  { id: 5, path: '/admin/add-item', label: 'Add Item' },
+  { id: 6, path: '/admin/menu-items', label: 'Edit Item' },
+];
+
 export const slide = [
   {
     id: 1,

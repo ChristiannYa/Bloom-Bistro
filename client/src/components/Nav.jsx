@@ -5,11 +5,14 @@ import '../styles/components/nav.css';
 import Burger from './Burger';
 import icons from '../assets/icons';
 
-import { navLinks } from '../constants';
+import { navLinks, adminLinks } from '../constants';
 import LogoutButton from '../admin/components/LogOutButton';
 
 const Navbar = () => {
   const isLoggedIn = localStorage.getItem('token');
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+  const allLinks = isAdmin ? [...navLinks, ...adminLinks] : navLinks;
 
   const OVERLAY_STYLES = useMemo(
     () => ({
@@ -28,6 +31,7 @@ const Navbar = () => {
     }),
     []
   );
+
   const SCROLL_TRESHOLD = 100;
   const MEDIUM_SCREEN_WIDTH = 768;
   let navigating = useRef(false);
@@ -37,6 +41,11 @@ const Navbar = () => {
 
   const location = useLocation();
   const [isActive, setIsActive] = useState(false);
+
+  const toggleMenu = () => {
+    setIsActive(!isActive);
+    handleOverlay(!isActive);
+  };
 
   const handleOverlay = useCallback(
     (show) => {
@@ -50,11 +59,6 @@ const Navbar = () => {
     },
     [OVERLAY_STYLES]
   );
-
-  const toggleMenu = () => {
-    setIsActive(!isActive);
-    handleOverlay(!isActive);
-  };
 
   useEffect(() => {
     const hideNav = () => {
@@ -114,7 +118,7 @@ const Navbar = () => {
         />
         <nav className="bg-acc-3 rounded-md mobile-stack flex-center w-fit p-4">
           <ul id="links" className="flex-center mobile-stack gap-3">
-            {navLinks
+            {allLinks
               .filter((link) => {
                 // Remove both '*' path and login link when user is logged in
                 if (link.path === '*') return false;
