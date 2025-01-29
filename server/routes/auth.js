@@ -6,26 +6,29 @@ import pool from '../config/db.js';
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
-  console.log('Login attempt:', {
-    username: req.body.username,
-    path: req.path,
-  });
-
   try {
     const { username, password } = req.body;
+
+    console.log('Login attempt for username:', username);
 
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [
       username,
     ]);
-
     const user = result.rows[0];
 
-    console.log('User found:', user ? 'yes' : 'no');
+    console.log('User found:', {
+      exists: !!user,
+      hasPasswordHash: !!user?.password_hash,
+    });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
 
     const passwordMatch = await bcrypt.compare(password, user.password_hash);
+    console.log('Password match:', passwordMatch);
 
-    if (!user || !passwordMatch) {
-      console.log('Invalid credentials');
+    if (!passwordMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
@@ -37,7 +40,10 @@ router.post('/login', async (req, res) => {
 
     res.json({ token, isAdmin: user.is_admin });
   } catch (error) {
-    console.log('Login error:', error);
+    console.error('Login error details:', {
+      message: error.message,
+      stack: error.stack,
+    });
     res.status(500).json({ error: error.message });
   }
 });
