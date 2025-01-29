@@ -169,9 +169,15 @@ const AddMenuItem = () => {
     const formData = new FormData();
     formData.append('image', file);
 
+    // Get token from localStorage
+    const token = localStorage.getItem('token');
+
     try {
       const response = await fetch(`${API_URL}/api/admin/upload`, {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
       const data = await response.json();
