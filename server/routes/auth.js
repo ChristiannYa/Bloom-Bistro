@@ -8,7 +8,6 @@ console.log('Available environment variables:', {
   adminCodeLength: process.env.ADMIN_SECRET_CODE?.length,
 });
 
-
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
@@ -57,6 +56,21 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
   try {
     const { username, password, adminCode } = req.body;
+
+    console.log('Available environment variables:', {
+      hasAdminCode: !!process.env.ADMIN_SECRET_CODE,
+      adminCodeLength: process.env.ADMIN_SECRET_CODE?.length,
+      adminCodeValue: process.env.ADMIN_SECRET_CODE,
+
+      // String comparison
+      stringComparison: {
+        received: adminCode,
+        expected: process.env.ADMIN_SECRET_CODE,
+        areEqual: adminCode === process.env.ADMIN_SECRET_CODE,
+        receivedLength: adminCode?.length,
+        expectedLength: process.env.ADMIN_SECRET_CODE?.length,
+      },
+    });
 
     console.log('Received admin code:', adminCode);
     console.log('Expected admin code:', process.env.ADMIN_SECRET_CODE);
