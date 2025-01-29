@@ -19,6 +19,8 @@ const Login = () => {
 
   const [error, setError] = useState('');
 
+  console.log('Current API URL:', API_URL);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
