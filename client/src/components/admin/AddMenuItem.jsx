@@ -170,7 +170,7 @@ const AddMenuItem = () => {
     formData.append('image', file);
 
     try {
-      const response = await fetch(`${API_URL}/api/upload`, {
+      const response = await fetch(`${API_URL}/api/admin/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -204,7 +204,7 @@ const AddMenuItem = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/admin/menu-items`, {
+      const response = await fetch(`${API_URL}/api/admin/upload`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
