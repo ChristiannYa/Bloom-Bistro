@@ -3,6 +3,12 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from '../config/db.js';
 
+console.log('Available environment variables:', {
+  hasAdminCode: !!process.env.ADMIN_SECRET_CODE,
+  adminCodeLength: process.env.ADMIN_SECRET_CODE?.length,
+});
+
+
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
@@ -51,6 +57,9 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
   try {
     const { username, password, adminCode } = req.body;
+
+    console.log('Received admin code:', adminCode);
+    console.log('Expected admin code:', process.env.ADMIN_SECRET_CODE);
 
     if (adminCode !== process.env.ADMIN_SECRET_CODE) {
       return res.status(401).json({
